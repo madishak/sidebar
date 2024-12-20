@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../assets/logo.png';
 import PropTypes from 'prop-types';
+import '../Sidebar/styles.scss';
 
 const routes = [
     { title: 'Home', icon: 'fas-solid fa-house', path: '/' },
@@ -21,7 +22,7 @@ const bottomRoutes = [
 const Sidebar = (props) => {
     const { color } = props;
     const [isOpened, setIsOpened] = useState(false);
-    const containerClassnames = classnames('sidebar', { opened: isOpened });
+    const containerClassnames = classnames('sidebar', { opened: isOpened, closed: !isOpened, sidebar__dark: color === 'dark' });
 
     const goToRoute = (path) => {
         console.log(`going to "${path}"`);
@@ -33,14 +34,14 @@ const Sidebar = (props) => {
 
     return (
         <div className={ containerClassnames }>
-            <div>
-                <img src={ logo } alt="TensorFlow logo"/>
+            <div className='sidebar__logo-box'>
+                <img src={ logo } alt="TensorFlow logo" />
                 <span>TensorFlow</span>
                 <div onClick={ toggleSidebar }>
                     <FontAwesomeIcon icon={ isOpened ? 'angle-left' : 'angle-right' }/>
                 </div>
             </div>
-            <div>
+            <div className='sidebar__routes'>
                 {
                     routes.map(route => (
                         <div
@@ -55,7 +56,7 @@ const Sidebar = (props) => {
                     ))
                 }
             </div>
-            <div>
+            <div className='sidebar__bottom-routes'>
                 {
                     bottomRoutes.map(route => (
                         <div
